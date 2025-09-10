@@ -62,4 +62,12 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\BookmarkNotesApp.Model\BookmarkNotesApp.Model.csproj" />
+	  <ProjectReference Include="..\BookmarkNotesApp.Repositories.Contracts\BookmarkNotesApp.Repositories.Contracts.csproj" />
+	  <ProjectReference Include="..\BookmarkNotesApp.Repositories\BookmarkNotesApp.Repositories.csproj" />
+	  <ProjectReference Include="..\BookmarkNotesApp.Services.Contracts\BookmarkNotesApp.Services.Contracts.csproj" />
+	  <ProjectReference Include="..\BookmarkNotesApp.Services\BookmarkNotesApp.Services.csproj" />
+	</ItemGroup>
+
 </Project>

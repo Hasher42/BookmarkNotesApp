@@ -1,25 +1,17 @@
-﻿namespace BookmarkNotesApp
+﻿using AndroidX.Lifecycle;
+using BookmarkNotesApp.Services.ViewModel;
+
+namespace BookmarkNotesApp
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
 
-        public MainPage()
+        public MainPage(BookmarkViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel; // ✅ Inject ViewModel via DI
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
     }
 
 }

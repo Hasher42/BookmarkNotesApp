@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-
-using BookmarkNotesApp.Model.DbContextApp;
-using BookmarkNotesApp.Repositories.Contracts;
+﻿using BookmarkNotesApp.Data;
 using BookmarkNotesApp.Repositories;
-using BookmarkNotesApp.Services.Contracts;
 using BookmarkNotesApp.Services;
-using BookmarkNotesApp.Services.ViewModel;
+using BookmarkNotesApp.ViewModels;
+using Microsoft.Extensions.Logging;
+
 namespace BookmarkNotesApp
 {
     public static class MauiProgram

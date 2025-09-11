@@ -1,59 +1,97 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BookmarkNotesApp.Views.MainPage"
+             x:Class="BookmarkNotesApp.MainPage"
              Title="Bookmarks"
-             xmlns:viewmodels="clr-namespace:BookmarkNotesApp.ViewModels">
+             BackgroundColor="#f0f0f0">
 
-    <ContentPage.BindingContext>
-        <viewmodels:BookmarkViewModel />
-    </ContentPage.BindingContext>
-
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <!-- Title -->
-        <Label Text="My Bookmarks"
-               FontSize="24"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="Black" />
+    <Grid Padding="15" RowDefinitions="Auto,Auto,*">
+        <!-- Transparent tap catcher to close keyboard -->
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+        </Grid.GestureRecognizers>
 
         <!-- Add Bookmark Button -->
-        <Button Text="Add Bookmark"
-                Command="{Binding AddCommand}"
-                BackgroundColor="#0078D7"
+        <Button Text="➕ Add Bookmark"
+                Command="{Binding NavigateToAddCommand}"
+                BackgroundColor="#4CAF50"
                 TextColor="White"
+                FontAttributes="Bold"
                 CornerRadius="10"
-                Padding="10" />
+                HeightRequest="50"
+                Grid.Row="0"/>
 
-        <!-- List of Bookmarks -->
-        <CollectionView ItemsSource="{Binding Bookmarks}">
+        <!-- Search Bar -->
+        <SearchBar
+            x:Name="SearchBarControl"
+            Placeholder="Search by Title or Category"
+            Text="{Binding SearchText, Mode=TwoWay}"
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            TextChanged="SearchBarControl_TextChanged"/>
+
+        <!-- Collection of Bookmarks -->
+        <CollectionView ItemsSource="{Binding FilteredBookmarks}"
+                        Grid.Row="2"
+                        Margin="0,10,0,0"
+                        SelectionChanged="CollectionView_SelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="10"
-                           Margin="5"
-                           BorderColor="LightGray"
-                           CornerRadius="8"
-                           HasShadow="True">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Title}"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="Black" />
-                            <Label Text="{Binding Url}"
-                                   FontSize="14"
-                                   TextColor="Gray" />
+                    <!-- SwipeView for swipe actions -->
+                    <SwipeView>
+                        <!-- Left swipe (Edit) -->
+                        <SwipeView.LeftItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    BackgroundColor="#FFC107"
+                                    IconImageSource="edit.png"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
+                                    CommandParameter="{Binding}"/>
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
 
-                            <!-- Delete Button -->
-                            <Button Text="Delete"
-                                    BackgroundColor="Red"
-                                    TextColor="White"
+                        <!-- Right swipe (Delete) -->
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    BackgroundColor="#F44336"
+                                    IconImageSource="delete.png"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
-                                    CommandParameter="{Binding}"
-                                    CornerRadius="8"
-                                    Padding="5"/>
-                        </VerticalStackLayout>
-                    </Frame>
+                                    CommandParameter="{Binding}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <!-- Bookmark Card -->
+                        <Frame CornerRadius="15"
+                               Padding="15"
+                               Margin="5"
+                               BackgroundColor="White"
+                               HasShadow="True"
+                               BorderColor="#dcdcdc">
+
+                            <StackLayout Spacing="8">
+                                <Label Text="{Binding Title}"
+                                       FontSize="22"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"/>
+                                <Label Text="{Binding Url}"
+                                       FontSize="14"
+                                       TextColor="#2196F3"
+                                       LineBreakMode="TailTruncation"/>
+                                <StackLayout Orientation="Horizontal" Spacing="10">
+                                    <Label Text="{Binding Category}"
+                                           FontSize="12"
+                                           TextColor="#FF9800"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="{Binding CreatedDate, StringFormat='{0:yyyy-MM-dd HH:mm}'}"
+                                           FontSize="12"
+                                           TextColor="#999999"
+                                           VerticalOptions="Center"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

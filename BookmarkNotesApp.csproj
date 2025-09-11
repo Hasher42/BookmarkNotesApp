@@ -57,17 +57,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BookmarkNotesApp.Model\BookmarkNotesApp.Model.csproj" />
-	  <ProjectReference Include="..\BookmarkNotesApp.Repositories.Contracts\BookmarkNotesApp.Repositories.Contracts.csproj" />
-	  <ProjectReference Include="..\BookmarkNotesApp.Repositories\BookmarkNotesApp.Repositories.csproj" />
-	  <ProjectReference Include="..\BookmarkNotesApp.Services.Contracts\BookmarkNotesApp.Services.Contracts.csproj" />
-	  <ProjectReference Include="..\BookmarkNotesApp.Services\BookmarkNotesApp.Services.csproj" />
+	  <Compile Update="Views\AddBookmarkPage.xaml.cs">
+	    <DependentUpon>AddBookmarkPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\AddBookmarkPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditBookmarkPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
